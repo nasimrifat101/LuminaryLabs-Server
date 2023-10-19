@@ -52,18 +52,19 @@ async function run() {
       res.send(result);
     });
 
-    // app.get("/phones/:brand?", async (req, res) => {
-    //   const { brand } = req.params;
-    //   try {
-    //     const query = brand ? { brand: brand } : {};
-    //     const cursor = phonesCollection.find(query);
-    //     const result = await cursor.toArray();
-    //     res.send(result);
-    //   } catch (error) {
-    //     console.error("Error fetching phones:", error);
-    //     res.status(500).send("Internal Server Error");
-    //   }
-    // });
+    
+    app.get("/phone/:brand?", async (req, res) => {
+      const { brand } = req.params;
+      try {
+        const query = brand ? { brand: brand } : {};
+        const cursor = phonesCollection.find(query);
+        const result = await cursor.toArray();
+        res.send(result);
+      } catch (error) {
+        console.error("Error fetching phones:", error);
+        res.status(500).send("Internal Server Error");
+      }
+    });
 
     app.get("/phones/:id", async (req, res) => {
       const id = req.params.id;
@@ -73,6 +74,7 @@ async function run() {
       res.send(result);
       console.log(result);
     });
+
 
     app.put("/phones/:id", async (req, res) => {
       const id = req.params.id;
@@ -94,6 +96,7 @@ async function run() {
       res.send(result);
       console.log(result);
     });
+
 
     app.post("/cart", async (req, res) => {
       const cart = req.body;
