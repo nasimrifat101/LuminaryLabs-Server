@@ -52,7 +52,6 @@ async function run() {
       res.send(result);
     });
 
-    
     app.get("/phone/:brand?", async (req, res) => {
       const { brand } = req.params;
       try {
@@ -75,7 +74,6 @@ async function run() {
       console.log(result);
     });
 
-
     app.put("/phones/:id", async (req, res) => {
       const id = req.params.id;
       const filter = { _id: new ObjectId(id) };
@@ -97,6 +95,11 @@ async function run() {
       console.log(result);
     });
 
+    app.get("/cart", async (req, res) => {
+      const cursor = addCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
 
     app.post("/cart", async (req, res) => {
       const cart = req.body;
@@ -106,10 +109,13 @@ async function run() {
       console.log(result);
     });
 
-    app.get("/cart", async (req, res) => {
-      const cursor = addCollection.find();
-      const result = await cursor.toArray();
+    app.delete("/cart/:id", async (req, res) => {
+      const itemId = req.params.id;
+      console.log(itemId);
+      const query = { _id: new ObjectId(itemId) };
+      const result = await addCollection.deleteOne(query);
       res.send(result);
+      console.log(result);
     });
 
     // Send a ping to confirm a successful connection
